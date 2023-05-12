@@ -49,6 +49,8 @@ In the Makefile, we need to specify the object file that needs to be compiled. W
 obj-y := hello1.o
 
 Once we have entered this information into the Makefile, we can save and exit the file. This Makefile will ensure that our C code is always compiled whenever the kernel is compiled.
+
+
 <img width="377" alt="make file" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/2dd70dd2-9f48-4137-a1bc-559d80a941b2">
 
 ### 6. Adding the new code into the system table file 
@@ -58,12 +60,16 @@ our system. If our system was a 32-bit system, we would have to add our system c
 syscall_32.tbl (We can check the type of our system by typing “uname -m” in a terminal).
 This tbl file is located inside the kernel folder in /arch/x86/entry/syscalls/syscall_64.tbl. We
 can go into this directory by using cd and then edit the file by typing “gedit syscall_64.tbl”
+
+
 <img width="334" alt="system table" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/86fd2378-7ef2-440c-97e7-3f5a292650d3">
 
 ### 7. Adding The Prototype Of New System Call
 Now we have to add the prototype of our system call in the system’s header file which is
 located in the kernel folder then “/include/linux/syscalls.h”. We have to add the prototype
 of our system call function in this file.
+
+
 <img width="232" alt="include" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/b55d9f80-b0a1-4840-9b78-1c5ff770c7b9">
 
 
@@ -73,6 +79,8 @@ have to add the new module that we created into our kernel’s make file. For th
 the Makefile of the kernel and search for “core-y” and go to it’s second instance which is
 under “KBUILD_EXTMOD” and add our new module which is “hello1” at the end of it. At the
 end, our make file will look something like this
+
+
 <img width="452" alt="makefile22" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/8b5f73d5-29a5-4cff-afe0-d011bc83d451">
 
 ### 8. Config File Creation
@@ -84,9 +92,10 @@ have by typing “ls /boot | grep config” and the we copy the config that is s
 typing “cp /boot/config-4.15.0-112-generic *our linux kernel directory*”. Then we create the
 old config by typing “yes "" | make oldconfig -j2”, by doing so, the system will automatically
 create the new config for us and select the default option for everything. 
- <img width="299" alt="config1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/d77ae803-ce93-4469-9301-6e03ee69df9a">
-<img width="364" alt="config2" src="https://github.com/SubhanKhur<img width="306" alt="config3" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/ab5b311b-0b95-4919-87d3-a680932f8756">
-shid/ProjectOs/assets/105592966/dd29bc6e-b11a-4e7b-9bba-561b1177e359">
+
+
+<img width="299" alt="config1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/d77ae803-ce93-4469-9301-6e03ee69df9a">
+<img width="364" alt="config2" src="https://github.com/SubhanKhur<img width="306" alt="config3" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/ab5b311b-0b95-4919-87d3-a680932f8756">shid/ProjectOs/assets/105592966/dd29bc6e-b11a-4e7b-9bba-561b1177e359">
 
 
  ### 9. Cleaning and Compiling The Kernel
@@ -102,8 +111,11 @@ number of cores by typing the command “lscpu” and enter the number according
 Now we have to wait until our Kernel image is built and ready. If we see “Kernel image is
 ready” when the command is done executing, that means that our kernel image is ready to
 be installed
+
+
 <img width="274" alt="make1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/460995c6-7c48-4f1b-9b2d-c718e86f8ddd">
 <img width="363" alt="make2" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/6c882d26-f955-4e5f-bb27-d57bb1f4e7b8">
+
 
 ### 10. Installing modules
 Now we have to install the kernel that we built by typing “make modules_install install”

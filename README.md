@@ -143,12 +143,18 @@ Now we compile the code by typing “gcc userspace.c” and executing it by typi
 it returns 0, this means that our code has compiled successfully
 
 <img width="146" alt="project1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/cb052153-6d64-4097-b683-c9c43c52ad0b">
-
+<img width="209" alt="project2" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/ed5710f6-df7a-4ef9-92be-f278525e2edd">
 
 ### SCREENSHOT OF THE OUTPUT:
+After successfull compilation of our program we can see the output by typing "dmesg"
+
+<img width="369" alt="finalOutput" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/ebd74c4c-9099-4175-8cb3-98832c156682">
+<img width="367" alt="finalOutput1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/d9c06e3a-ab94-4d7b-a82c-0d53a428e4b6">
 
 
-<img width="209" alt="project2" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/ed5710f6-df7a-4ef9-92be-f278525e2edd">
+
+
+
 
 
 

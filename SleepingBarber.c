@@ -1,106 +1,115 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <semaphore.h>
+#include <linux/semaphore.h>
+#include <linux/kthread.h>
+#include <linux/delay.h>
+#include <linux/unistd.h>
+#include <linux/module.h>
+#include <linux/init.h>
 #include <linux/kernel.h>
-#include <sys/syscall.h>
-#define MAX_CUSTOMERS 25
-asmlinkage long sys_hello1(void)
+
+#define MAX_CUSTOMERS 50
+
+struct semaphore waitingRoom;
+struct semaphore barberChair;
+struct semaphore barberPillow;
+struct semaphore seatBelt;
+int flag = 0;
+int temp = 25;
+void *CUSTOMER(void *customer)
 {
 
-    void *customer(void *num);
-    void *barber(void *);
-    sem_t waitingRoom;
+    int c = *(int *)customer;
+    printk("Customer %d leaving for barber shop.\n", c);
+    msleep(5);
+    printk("Customer %d arrived at barber shop.\n", c);
+    down(&waitingRoom);
+    printk("Customer %d entering waiting room.\n", c);
+    down(&barberChair);
+    up(&waitingRoom);
+    printk("\n\t\t\tCustomer %d waking the barber.\n", c);
+    up(&barberPillow);
+    down(&seatBelt);
+    up(&barberChair);
+    printk("Customer %d leaving barber shop.\n", c);
+    return NULL;
+}
 
-    sem_t barberChair;
+void *barber(void *val)
+{
 
-    sem_t barberPillow;
-
-    sem_t seatBelt;
-
-    int allDone = 0;
-    int main(int argc, char *argv[])
+    while (!flag)
     {
-        pthread_t btid;
-        pthread_t tid[MAX_CUSTOMERS];
-        int i, x, numCustomers, numChairs;
-        int Number[MAX_CUSTOMERS];
-        printf("Maximum number of customers can only be 25. Enter number of customers and chairs.\n");
-        scanf("%d", &x);
-        numCustomers = x;
-        scanf("%d", &x);
-        numChairs = x;
-        if (numCustomers > MAX_CUSTOMERS)
+        printk("\t\tThe barber is sleeping\n");
+
+        down(&barberPillow);
+        if (!flag)
         {
-            printk("The maximum number of Customers is %d.\n", MAX_CUSTOMERS);
-            return 0;
-        }
-        printk("A solution to the sleeping barber problem using semaphores.\n");
-        for (i = 0; i < MAX_CUSTOMERS; i++)
-        {
-            Number[i] = i;
+            printk("\t\tThe barber is cutting hair\n");
+            msleep(3);
+            printk("\t\tThe barber has finished cutting hair.\n");
+            temp--;
+            up(&seatBelt);
         }
 
-        sem_init(&waitingRoom, 0, numChairs);
-        sem_init(&barberChair, 0, 1);
-        sem_init(&barberPillow, 0, 0);
-        sem_init(&seatBelt, 0, 0);
-
-        pthread_create(&btid, NULL, barber, NULL);
-
-        for (i = 0; i < numCustomers; i++)
+        else
         {
-            pthread_create(&tid[i], NULL, customer, (void *)&Number[i]);
-        }
-
-        for (i = 0; i < numCustomers; i++)
-        {
-            pthread_join(tid[i], NULL);
-        }
-
-        allDone = 1;
-        sem_post(&barberPillow);
-        pthread_join(btid, NULL);
-        return 0;
-    }
-    void *customer(void *number)
-    {
-        int num = *(int *)number;
-        printk("Customer %d leaving for barber shop.\n", num);
-        sleep(5);
-        printk("Customer %d arrived at barber shop.\n", num);
-
-        sem_wait(&waitingRoom);
-        printk("Customer %d entering waiting room.\n", num);
-        sem_wait(&barberChair);
-        sem_post(&waitingRoom);
-        printk("Customer %d waking the barber.\n", num);
-        sem_post(&barberPillow);
-        sem_wait(&seatBelt);
-        sem_post(&barberChair);
-        printk("Customer %d leaving barber shop.\n", num);
-    }
-    void *barber(void *junk)
-    {
-
-        while (!allDone)
-        {
-            printk("The barber is sleeping\n");
-            sem_wait(&barberPillow);
-            if (!allDone)
-            {
-                printk("The barber is cutting hair\n");
-                sleep(3);
-                printk("The barber has finished cutting hair.\n");
-                sem_post(&seatBelt);
-            }
-
-            else
-            {
-                printk("The barber is going home for the day.\n");
-            }
+            printk("The barber is going home for the day.\n");
         }
     }
+    return NULL;
+}
+
+asmlinkage long sys_SleepingBarber(void)
+{
+    int numCustomers, numChairs;
+    int i;
+    numCustomers = 25;
+    numChairs = 6;
+
+    int customer[MAX_CUSTOMERS];
+    struct task_struct *customer_id[MAX_CUSTOMERS];
+    struct task_struct *barber_id;
+
+    printk("A solution to the sleeping barber problem using semaphores.\n");
+    for (i = 0; i < numCustomers; i++)
+    {
+        customer[i] = i + 1;
+    }
+
+    sema_init(&waitingRoom, numChairs);
+    sema_init(&barberChair, 1);
+    sema_init(&barberPillow, 0);
+    sema_init(&seatBelt, 0);
+    int junk = 0;
+
+    barber_id = kthread_create((void *)barber, (void *)&junk, "Barber");
+    if (barber_id)
+    {
+        wake_up_process(barber_id);
+    }
+    else
+    {
+        kthread_stop(barber_id);
+    }
+
+    for (i = 0; i < numCustomers; i++)
+    {
+        customer_id[i] = kthread_create((void *)CUSTOMER, (void *)&customer[i], "customer");
+        if (customer_id[i])
+        {
+            wake_up_process(customer_id[i]);
+        }
+        else
+        {
+            kthread_stop(customer_id[i]);
+        }
+    }
+
+    if (temp == 0)
+    {
+        flag = 1;
+        up(&barberPillow);
+        printk("The barber is going home for the day.\n");
+    }
+
     return 0;
 }

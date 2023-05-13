@@ -39,19 +39,20 @@ Navigate to the directory where the kernel was extracted, and then enter into th
 
 ### 4. Adding a Sleeping Barber C code for the system call
 Now, go to the folder which we created just now and open the terminal there and create a
-new C code file by typing “gedit hello1.c” and paste the following code there:
+new C code file by typing “gedit code.c” and paste the following code there:
 
 ### 5. Creating a Make File for the C code
 To create a Makefile for our new folder, we need to follow a few steps. Firstly, we need to open the terminal and navigate to our new folder by using the 'cd' command. Once we are in the new folder, we can create a new file called 'Makefile' using the command "touch Makefile". Then, we need to open this file using a text editor such as nano or gedit by typing "nano Makefile" or "gedit Makefile" respectively.
 
 In the Makefile, we need to specify the object file that needs to be compiled. We do this by using the "obj-y" flag, followed by the name of our object file, which in this case is "hello1.o". The final line in the Makefile should look like this:
 
-obj-y := hello1.o
+obj-y := code.o
 
 Once we have entered this information into the Makefile, we can save and exit the file. This Makefile will ensure that our C code is always compiled whenever the kernel is compiled.
 
+<img width="343" alt="makeFile" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/11159af5-5f12-4825-a02c-69900efd37b3">
 
-<img width="377" alt="make file" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/2dd70dd2-9f48-4137-a1bc-559d80a941b2">
+
 
 ### 6. Adding the new code into the system table file 
 Since we are creating a 64-bit system call according to our system we have to add the
@@ -62,18 +63,19 @@ This tbl file is located inside the kernel folder in /arch/x86/entry/syscalls/sy
 can go into this directory by using cd and then edit the file by typing “gedit syscall_64.tbl”
 
 
-<img width="334" alt="system table" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/86fd2378-7ef2-440c-97e7-3f5a292650d3">
+<img width="352" alt="table" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/616c33c2-fdda-4251-a4e1-d942a3b83da3">
+
 
 ### 7. Adding The Prototype Of New System Call
 Now we have to add the prototype of our system call in the system’s header file which is
 located in the kernel folder then “/include/linux/syscalls.h”. We have to add the prototype
 of our system call function in this file.
 
+<img width="243" alt="include" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/6fc9c747-1054-419c-a4b6-9a6957656cbd">
 
-<img width="232" alt="include" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/b55d9f80-b0a1-4840-9b78-1c5ff770c7b9">
 
 
-### 8. Adding Hello1 Folder in kernel's MakeFile
+### 8. Adding Code Folder in kernel's MakeFile
 Now, we have to add our roll number in the extraversion of the kernel’s make file and we
 have to add the new module that we created into our kernel’s make file. For this, we open
 the Makefile of the kernel and search for “core-y” and go to it’s second instance which is
@@ -81,7 +83,8 @@ under “KBUILD_EXTMOD” and add our new module which is “hello1” at the en
 end, our make file will look something like this
 
 
-<img width="452" alt="makefile22" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/8b5f73d5-29a5-4cff-afe0-d011bc83d451">
+<img width="389" alt="make2" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/adbacf42-61b9-4fca-b452-90be21c30fda">
+
 
 ### 8. Config File Creation
 Now we have to create a config file for our kernel. The order of the steps before this can
@@ -95,7 +98,6 @@ create the new config for us and select the default option for everything.
 
 
 <img width="299" alt="config1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/d77ae803-ce93-4469-9301-6e03ee69df9a">
-<img width="364" alt="config2" src="https://github.com/SubhanKhur<img width="306" alt="config3" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/ab5b311b-0b95-4919-87d3-a680932f8756">shid/ProjectOs/assets/105592966/dd29bc6e-b11a-4e7b-9bba-561b1177e359">
 
 
  ### 9. Cleaning and Compiling The Kernel
@@ -134,15 +136,19 @@ named “userspace.c” and putting the following code in it:
 int main()
 {
  long int i = syscall(335);
- printf("System call sys_hello returned %ld\n", i);
+ printf("System call sys_SleepingBarber returned %ld\n", i);
  return 0;
 }
 Now we compile the code by typing “gcc userspace.c” and executing it by typing “./a.out”. If
 it returns 0, this means that our code has compiled successfully
 
+<img width="146" alt="project1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/cb052153-6d64-4097-b683-c9c43c52ad0b">
+
+
 ### SCREENSHOT OF THE OUTPUT:
 
 
+<img width="209" alt="project2" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/ed5710f6-df7a-4ef9-92be-f278525e2edd">
 
 
 

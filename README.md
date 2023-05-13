@@ -15,17 +15,17 @@ The objective of this project is to implement the Sleeping Barber Problem using 
 We have used ubuntu 16.04.7 for the implementation of this project.
 
 ## Prerequisites
-• sudo apt-get install gcc
-• sudo apt-get install libncurses5-dev
-• sudo apt-get install bison
-• sudo apt-get install flex
-• sudo apt install make
-• sudo apt-get install libssl-dev
-• sudo apt-get install libelf-dev
-• sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main
+1.  sudo apt-get install gcc
+2.  sudo apt-get install libncurses5-dev
+3.  sudo apt-get install bison
+4.  sudo apt-get install flex
+5.  sudo apt install make
+6.  sudo apt-get install libssl-dev
+7.  sudo apt-get install libelf-dev
+8.  sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main
 universe"
-• sudo apt-get update
-• sudo apt-get upgrade
+9.  sudo apt-get update
+10. sudo apt-get upgrade
 
 ## Steps
 ### 1. Acquiring the Kernel
@@ -153,7 +153,10 @@ After successfull compilation of our program we can see the output by typing "dm
 
 
 
-
+### Help
+1. For this project I followed Wahaj's Video on Youtube
+2. Project Report Help was also taken by Wahaj's video as the steps were almost same
+3. For resolving any kinds of error I took help from chatGPT and stackOverflow
 
 
 

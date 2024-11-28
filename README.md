@@ -142,7 +142,7 @@ int main()
 Now we compile the code by typing “gcc userspace.c” and executing it by typing “./a.out”. If
 it returns 0, this means that our code has compiled successfully
 
-<img width="146" alt="project1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/cb052153-6d64-4097-b683-c9c43c52ad0b">
+
 <img width="209" alt="project2" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/ed5710f6-df7a-4ef9-92be-f278525e2edd">
 
 ### SCREENSHOT OF THE OUTPUT:

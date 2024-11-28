@@ -97,7 +97,7 @@ old config by typing “yes "" | make oldconfig -j2”, by doing so, the system 
 create the new config for us and select the default option for everything. 
 
 
-<img width="299" alt="config1" src="https://github.com/SubhanKhurshid/ProjectOs/assets/105592966/d77ae803-ce93-4469-9301-6e03ee69df9a">
+
 
 
  ### 9. Cleaning and Compiling The Kernel

@@ -1,9 +1,9 @@
 # Project Report Operating System 
 ## Project Title
 ### Sleeping Barber System Call
-## Group Members
-### Subhan Khurshid  - 21k-3096
-### Ruhama Umer Khan - 21k-3097
+
+### Muhammad Azeem  - 20k-0314
+
 
 ## Overview
 The Sleeping Barber Problem is a classic synchronization problem in Operating Systems, which deals with managing resources in a multi-process environment. The problem involves a barber shop that has one barber and a limited number of chairs for customers to wait in line. The barber alternates between sleeping in the back room and cutting hair in the barber chair, while customers arrive and take a seat in one of the chairs if they are available. If there are no available chairs, they leave and come back later.

@@ -1,8 +1,7 @@
 # Project Report Operating System 
 ## Project Title
 ### Sleeping Barber System Call
-
-### Muhammad Azeem  - 20k-0314
+### Haseeb Ahmed (SP23-BSCS-0026)
 
 
 ## Overview
